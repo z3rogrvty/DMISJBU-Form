@@ -1,0 +1,42 @@
+*{box-sizing:border-box}
+body{margin:0;background:#777;color:#000;font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif}
+.tools{position:sticky;top:0;z-index:9;background:#12384a;color:#fff;padding:8px;text-align:center;font:14px Arial}
+.tools button{font:bold 14px Arial;margin:0 6px;padding:7px 16px;border:0;background:#00aeef;color:#fff;cursor:pointer}
+.tools button.g{background:#666}.tools small{margin-left:10px;opacity:.8}
+.page{position:relative;width:612pt;height:792pt;background:#c0e3ec;margin:10px auto;overflow:hidden}
+.a{position:absolute;white-space:nowrap;transform:translateY(-50%)}
+.ar{font-family:Arial,Helvetica,sans-serif}.b{font-weight:bold}.it{font-style:italic}.tm{font-family:"Times New Roman",Times,serif}
+input,textarea{font:inherit;color:#000;margin:0;border-radius:0}
+input:focus,textarea:focus{outline:2px solid #00aeef}
+input.cb{position:absolute;appearance:none;-webkit-appearance:none;width:10pt;height:10pt;border:1.3pt solid #222;background:#c9e9f2;cursor:pointer;transform:translateY(-50%)}
+input.cb.big{width:22pt;height:15pt;border:1pt solid #000;background:transparent}
+input.cb:checked{background:#111;box-shadow:inset 0 0 0 2pt #c9e9f2}
+input.cb.big:checked{background:transparent;box-shadow:none;background-image:linear-gradient(45deg,transparent 46%,#000 46%,#000 54%,transparent 54%),linear-gradient(-45deg,transparent 46%,#000 46%,#000 54%,transparent 54%)}
+input.i{position:absolute;border:0;background:transparent;padding:0 3pt;font-size:10pt}
+input.bx{border:1.3pt solid #222;background:#fff}
+input.ce{position:absolute;width:20.1pt;height:19pt;border:.8pt solid #777;background:transparent;text-align:center;font-size:11pt;padding:0;text-transform:uppercase}
+input.ce::placeholder{color:#b0b0b0;opacity:1}
+.ln{display:flex;align-items:flex-end}.ln span{white-space:nowrap}
+.ln input{flex:1;min-width:0;border:0;border-bottom:.8pt solid #000;background:transparent;height:11pt;padding:0 2pt;font-size:9pt}
+.campus{position:absolute;top:108.6pt;height:71.5pt;background:#fff;border:.8pt solid #00aeef;text-align:center;font:7.8pt/9.2pt Arial,sans-serif}
+.campus b{display:block;background:#00aeef;color:#fff;font-size:7.5pt;height:12pt;line-height:12pt;margin-bottom:6pt}
+.photo{position:absolute;left:515pt;top:2pt;width:94pt;height:103pt;border:1pt solid #999;background:#f9fdfe;color:#8a8a8a;font:italic 10pt/16pt Arial;text-align:center;padding-top:30pt;cursor:pointer;overflow:hidden}
+.photo input{display:none}.photo img{width:100%;height:100%;object-fit:cover;display:block;margin-top:-30pt}
+.pt{position:absolute;left:45pt;width:519pt;border:1.3pt solid #222;background:#fff;display:grid;grid-template-columns:47pt 86pt 77pt 59pt 52pt 1fr;grid-template-rows:18pt 18pt;font:8.5pt Arial}
+.pt>div{border:.8pt solid #222;display:flex;align-items:center;padding:0 3pt;position:relative}
+.pt .l{grid-row:1/3;justify-content:center;text-align:center;font:bold 11.5pt/13pt Arial}
+.pt .pn{grid-column:3/7}.pt i{font-style:italic;margin-left:2pt}
+.pt input.cb{position:static;transform:none;flex:none}
+.pt .pn input{flex:1;border:0;background:transparent;font-size:11pt;outline:0}
+.xt{position:absolute;left:46pt;width:520pt;border-top:.7pt solid #222;border-left:.7pt solid #222;display:grid;grid-template-columns:162pt 156pt 202pt;background:transparent}
+.xt>div{border-right:.7pt solid #222;border-bottom:.7pt solid #222;display:flex;align-items:center;padding:0 2pt;font-size:11.5pt;overflow:hidden}
+.xt>div.th{background:#2a9fc0;font:bold 9pt Calibri,Carlito,sans-serif;height:22pt}
+.xt>div.sm{font-size:8.5pt}.xt>div.ft{font-size:10pt}
+.xt input{flex:1;min-width:0;border:0;background:transparent;font-size:9pt;height:100%;padding:0 2pt;outline:0}
+.xt input.s{flex:.5}
+.u{position:absolute;border:0;border-bottom:.8pt solid #000;background:transparent;height:12pt;font-size:9pt;padding:0 2pt}
+textarea.u{display:none}
+.ck{position:absolute;left:55pt;top:297pt;width:507pt;border:.8pt solid #222;display:grid;grid-template-columns:435pt 1fr;font:8.5pt Calibri,Carlito,sans-serif}
+.ck>div{border:.8pt solid #222;padding:3pt 4pt;display:flex;align-items:center}
+.ck>div.c{justify-content:center}
+@media print{body{background:#fff}.tools{display:none}.page{margin:0;zoom:1!important;page-break-after:always}input:focus{outline:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:letter;margin:0}}

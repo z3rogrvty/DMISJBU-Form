@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DMI – Admin · Applications</title>
+<style>
+  body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",Arial;background:#f4f7fa;color:#222}
+  header{background:#12384a;color:#fff;padding:14px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  header h1{margin:0;font-size:18px;flex:1}
+  header input{padding:6px 8px;border:0;border-radius:4px;font:inherit;min-width:220px}
+  header button{padding:7px 14px;border:0;border-radius:4px;background:#00aeef;color:#fff;font-weight:600;cursor:pointer}
+  header button:disabled{opacity:.5;cursor:not-allowed}
+  main{padding:20px;max-width:1100px;margin:0 auto}
+  table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #e5edf2;font-size:13px}
+  th{background:#e9f7fb;color:#12384a;font-weight:600}
+  tr:hover td{background:#f8fcfe}
+  td button{padding:4px 10px;border:0;border-radius:3px;background:#2a9fc0;color:#fff;cursor:pointer}
+  .msg{padding:12px;border-radius:6px;background:#fff3cd;color:#664d03;margin-bottom:14px}
+  .msg.err{background:#f8d7da;color:#842029}
+  .detail{background:#fff;border-radius:8px;padding:16px 20px;margin-top:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .detail h2{margin-top:0;font-size:16px}
+  .kv{display:grid;grid-template-columns:220px 1fr;gap:4px 12px;font-size:13px}
+  .kv div:nth-child(odd){color:#555;font-weight:600}
+  .kv div:nth-child(even){word-break:break-word}
+  .photo{max-width:160px;max-height:200px;border:1px solid #ccc;margin-top:8px}
+  .empty{color:#666;text-align:center;padding:40px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>DMI Applications — Admin</h1>
+  <input id="token" type="password" placeholder="Admin token" autocomplete="off">
+  <button id="load" onclick="loadList()">Load</button>
+  <button id="csv" onclick="downloadCsv()" disabled>Download CSV</button>
+</header>
+<main>
+  <div id="msg" class="msg hidden"></div>
+  <table id="list" class="hidden">
+    <thead>
+      <tr><th>App No</th><th>Submitted</th><th>Name</th><th>Level</th><th>Photo</th><th></th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div id="empty" class="empty hidden">No submissions yet.</div>
+  <div id="detail" class="detail hidden"></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let currentToken='';
+
+function showMsg(text,isErr){
+  const m=$('msg'); m.textContent=text;
+  m.className='msg'+(isErr?' err':''); m.classList.remove('hidden');
+  clearTimeout(showMsg._t);
+  showMsg._t=setTimeout(()=>m.classList.add('hidden'),6000);
+}
+function getToken(){
+  const t=$('token').value.trim();
+  if(!t){showMsg('Please enter the admin token.',true);return null;}
+  currentToken=t; return t;
+}
+function esc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function loadList(){
+  const token=getToken(); if(!token) return;
+  try{
+    const res=await fetch('/api/submissions',{headers:{'x-admin-token':token}});
+    if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.error||('Failed to load ('+res.status+')')); }
+    const rows=await res.json();
+    renderList(rows);
+    $('csv').disabled=false;
+  }catch(err){ showMsg(err.message,true); }
+}
+
+function renderList(rows){
+  const tbody=$('list').querySelector('tbody');
+  tbody.innerHTML='';
+  $('list').classList.toggle('hidden',rows.length===0);
+  $('empty').classList.toggle('hidden',rows.length>0);
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${esc(r.appNo)}</td>
+      <td>${esc(new Date(r.submittedAt).toLocaleString())}</td>
+      <td>${esc(r.name)}</td>
+      <td>${esc(r.level||'')}</td>
+      <td>${r.hasPhoto?'📷':'—'}</td>
+      <td><button data-id="${esc(r.id)}">Open</button></td>`;
+    tbody.appendChild(tr);
+  });
+  tbody.querySelectorAll('button[data-id]').forEach(b=>{ b.onclick=()=>openDetail(b.dataset.id); });
+}
+
+async function openDetail(id){
+  try{
+    const res=await fetch('/api/submissions/'+encodeURIComponent(id),{headers:{'x-admin-token':currentToken}});
+    if(!res.ok) throw new Error('Failed to load record');
+    const r=await res.json();
+    renderDetail(r);
+  }catch(err){ showMsg(err.message,true); }
+}
+
+function renderDetail(r){
+  const fields=r.fields||{};
+  const pairs=Object.entries(fields)
+    .filter(([k,v])=>v!=='' && v!=null)
+    .map(([k,v])=>`<div>${esc(k)}</div><div>${esc(v===true?'☑':v)}</div>`)
+    .join('');
+  const photoHtml=r.photo
+    ? `<img class="photo" src="/api/submissions/${encodeURIComponent(r.id)}/photo?token=${encodeURIComponent(currentToken)}" alt="Applicant photo">`
+    : '';
+  $('detail').innerHTML=`
+    <h2>Application ${esc(r.appNo)}</h2>
+    <div class="kv">
+      <div>Submitted</div><div>${esc(new Date(r.submittedAt).toLocaleString())}</div>
+      <div>Name</div><div>${esc(r.name)}</div>
+      <div>Level</div><div>${esc(r.level||'')}</div>
+      <div>IP</div><div>${esc(r.ip)}</div>
+      <div>User agent</div><div>${esc(r.userAgent)}</div>
+    </div>
+    ${photoHtml?'<h3 style="font-size:14px;margin-top:16px">Photo</h3>'+photoHtml:''}
+    <h3 style="font-size:14px;margin-top:16px">All fields</h3>
+    <div class="kv">${pairs||'<div>—</div><div>No fields</div>'}</div>`;
+  $('detail').classList.remove('hidden');
+  $('detail').scrollIntoView({behavior:'smooth'});
+}
+
+function downloadCsv(){
+  if(!currentToken){showMsg('Enter token first.',true);return;}
+  window.open('/api/export.csv?token='+encodeURIComponent(currentToken),'_blank');
+}
+
+/* convenience: prefill + auto-load after token change */
+try{
+  const saved=localStorage.getItem('dmi-admin-token');
+  if(saved) $('token').value=saved;
+}catch(e){}
+$('token').addEventListener('change',e=>{
+  try{localStorage.setItem('dmi-admin-token',e.target.value);}catch(e){}
+  currentToken=e.target.value.trim();
+  if(currentToken) loadList();
+});
+</script>
+</body>
+</html>

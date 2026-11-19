@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DMI – St. John the Baptist University | Application Form</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<div class="tools"><button type="button" onclick="print()">Print / Save as PDF</button><button type="button" onclick="submitApplication()" id="submitBtn">Submit application</button><button type="button" class="g" onclick="clearAll()">Clear form</button><small>Progress is saved automatically in this browser.</small></div>
+<form id="form" autocomplete="off" onsubmit="return false">
+<section class="page" id="p1"></section><section class="page" id="p2"></section>
+<section class="page" id="p3"></section><section class="page" id="p4"></section>
+</form>
+<script>
+const $=id=>document.getElementById(id),pt=n=>n+'pt';
+function T(p,x,y,h,c='',s=''){const d=document.createElement('div');d.className='a '+c;d.style.cssText=`left:${x}pt;top:${y}pt;${s}`;d.innerHTML=h;$(p).appendChild(d);return d}
+function IN(p,x,y,w,h,n,c='i bx',t='text'){const e=document.createElement('input');e.type=t;e.name=n;e.className=c;e.style.cssText=`left:${x}pt;top:${y-h/2}pt;width:${w}pt;height:${h}pt`;$(p).appendChild(e)}
+function CB(p,x,y,n,t='checkbox',c=''){const e=document.createElement('input');e.type=t;e.name=n;e.className='cb '+c;e.style.cssText=`left:${x}pt;top:${y}pt`;$(p).appendChild(e)}
+function UL(p,x1,x2,y,n,t='text'){const e=document.createElement('input');e.type=t;e.name=n;e.className='u';e.style.cssText=`left:${x1}pt;width:${x2-x1}pt;top:${y-10}pt`;$(p).appendChild(e)}
+function LN(p,x1,x2,y,l,n,c='b',s='font-size:8.5pt'){T(p,x1,y,`<div class="ln" style="width:${x2-x1}pt"><span>${l}</span><input name="${n}"></div>`,c,s)}
+function CE(p,x,y,w,h,n,ph){const e=document.createElement('input');e.name=n;e.maxLength=1;e.placeholder=ph||'';e.className='ce';e.style.cssText=`left:${x}pt;top:${y}pt;width:${w}pt;height:${h}pt`;e.oninput=()=>{e.value=e.value.toUpperCase();if(e.value&&e.nextElementSibling&&e.nextElementSibling.classList.contains('ce'))e.nextElementSibling.focus()};e.onkeydown=k=>{if(k.key==='Backspace'&&!e.value&&e.previousElementSibling&&e.previousElementSibling.classList.contains('ce'))e.previousElementSibling.focus()};$(p).appendChild(e)}
+
+/* ---------- PAGE 1 ---------- */
+let p='p1';
+p1.insertAdjacentHTML('beforeend','<img src="logo.png" alt="" style="position:absolute;left:-1pt;top:6pt;width:93.5pt"><label class="photo" id="photo"><span>Affix recent<br>passport size<br>color photo</span><input type="file" accept="image/*" id="photoIn"></label>');
+T(p,98,21,'DMI – ST. JOHN THE BAPTIST UNIVERSITY','ar b','width:411pt;text-align:center;font-size:19.8pt;color:#00a8e8;left:98pt');
+T(p,230,44,'MALAWI','ar b','width:120pt;text-align:center;font-size:13.5pt;color:#00a8e8');
+T(p,96,65.5,'(Run by the Fathers of MMI, Sisters of DMI and Collaborators)','ar','width:400pt;text-align:center;font-size:8pt');
+T(p,96,81.6,'Fully approved &amp; accredited by the Government of Malawi','tm it','width:400pt;text-align:center;font-size:9pt');
+T(p,96,97.7,'Website: www.dmisjbu.edu.mw','tm it','width:400pt;text-align:center;font-size:9pt');
+[[49,222,'MANGOCHI CAMPUS','P.O Box 406,<br>Mangochi, Malawi, Central Africa<br>Ph: + 265 991287235, + 265 884100676<br>Tel: 01599790<br>E-mail: dmisjbu@gmail.com'],
+ [227,391,'LILONGWE CAMPUS','P.O Box 2398, Area 4, Lilongwe, Malawi,<br>Central Africa<br>Phone: + 265 881047088<br>+ 265 992371901<br>E-mail: dmisjbulilongwe@gmail.com'],
+ [398,566,'BLANTYRE CAMPUS','P.O Box 5806,<br>Raynor Avenue,Limbe, Malawi, Central Africa<br>Ph: + 265 999933788, + 265 888711115<br>E-mail: ticblantyre@gmail.com']]
+ .forEach(c=>p1.insertAdjacentHTML('beforeend',`<div class="campus" style="left:${c[0]}pt;width:${c[1]-c[0]}pt"><b>${c[2]}</b>${c[3]}</div>`));
+CB(p,42,200.5,'level','radio');T(p,56,200.5,'Diploma','ar b','font-size:9.5pt');
+CB(p,104,200.5,'level','radio');T(p,121,200.5,'Bachelor Degree','ar b','font-size:9.5pt');
+T(p,227,201.8,'APPLICATION FORM','ar b','width:156pt;height:22.5pt;line-height:22.5pt;background:#00aeef;color:#fff;text-align:center;font-size:14pt;transform:translateY(-50%)');
+T(p,386,201.8,'<span style="font-weight:bold;font-size:11.5pt">Application No:</span>','ar','width:180pt;height:22.5pt;line-height:22.5pt;background:#e9f7fb;padding-left:4pt');
+IN(p,462,201.8,100,18,'appno','i','text');
+T(p,42,224,'A. PERSONAL DETAILS','ar b','font-size:10pt');
+T(p,42,243,'1. Title:','ar b','font-size:8.5pt');CB(p,78,243,'title','radio');T(p,89,243,'Mr.','ar b','font-size:9pt');CB(p,112,243,'title','radio');T(p,123,243,'Ms.','ar b','font-size:9pt');T(p,142,243,'(Please Tick one)','ar it','font-size:8.5pt');
+T(p,42,260,'2. Name of the Applicant:','ar b','font-size:8.5pt');T(p,150,260,'(In Capital Letter)','ar it','font-size:8.5pt');
+const m1={},m2={};[...'SURNAME'].forEach((c,i)=>m1[i]=c);[...'FIRST'].forEach((c,i)=>m1[16+i]=c);[...'NAME'].forEach((c,i)=>m1[22+i]=c);[...'INITIAL'].forEach((c,i)=>m2[9+i]=c);
+for(let i=0;i<26;i++){CE(p,48+i*20.1,273,20.1,19,'n1_'+i,m1[i]);}
+for(let i=0;i<26;i++){CE(p,48+i*20.1,292,20.1,19,'n2_'+i,m2[i]);}
+T(p,42,321,'3. Gender:','ar b','font-size:8.5pt');CB(p,94.5,321,'gender','radio');T(p,106,321,'Male','ar b','font-size:9pt');CB(p,132,321,'gender','radio');T(p,145,321,'Female','ar b','font-size:9pt');
+T(p,184,321,'4. Date of the Birth:','ar b','font-size:8.5pt');
+[...'DDMMYYYY'].forEach((c,i)=>CE(p,269+i*19,313,19,18,'dob'+i,c));
+T(p,427,321,'5. Age:','ar b','font-size:8.5pt');[0,1].forEach(i=>CE(p,461+i*18.5,313,18.5,18,'age'+i));
+T(p,42,346,'6. Marital Status:','ar b','font-size:8.5pt');CB(p,124,346,'marital','radio');T(p,135,346,'Married','ar b','font-size:9pt');CB(p,172,346,'marital','radio');T(p,184,346,'Single','ar b','font-size:9pt');
+T(p,222,346,'7. Nationality:','ar b','font-size:8.5pt');IN(p,285,345,102,18,'nat');T(p,395,346,'8. Religion:','ar b','font-size:8.5pt');IN(p,447,345,101,18,'rel');
+T(p,42,368,'9. Home District:','ar b','font-size:8.5pt');IN(p,121,368,101,18,'dist');T(p,228,368,'10. Traditional Authority:','ar b','font-size:8.5pt');IN(p,337,368,102,18,'ta');T(p,441,368,'11. Village:','ar b','font-size:8.5pt');IN(p,490,368,81,18,'vil');
+T(p,42,390,'12. Tribe:','ar b','font-size:8.5pt');IN(p,84,390,82,18,'tribe');T(p,179,390,'13. Passport/NRC No.:','ar b','font-size:8.5pt');IN(p,276,390,101,18,'nrc');
+T(p,45,416,'B. NEXT OF KIN','ar b','font-size:10pt');
+LN(p,46,122,436,'Title:','k1','ar b');LN(p,124,255,436,'Surname :','k2','ar b');LN(p,258,424,436,'First Name:','k3','ar b');LN(p,427,563,436,'Initial :','k4','ar b');
+LN(p,46,563,458,'Address:','k5','ar b');
+LN(p,46,214,473,'Email ID:','k6','ar b');LN(p,217,384,473,'Mobile No:','k7','ar b');LN(p,392,563,473,'Occupation :','k8','ar b');
+LN(p,46,308,491,'Organization :','k9','ar b');LN(p,311,563,491,'Relationship:','k10','ar b');
+T(p,47,520,'C. PROGRAMME APPLIED FOR','ar b','font-size:10pt');
+T(p,64,542,'Campuses: Mangochi (MH), Lilongwe(LW), Blantyre (BT)( Choose the one appropriate )','ar it','font-size:10pt');
+[['First',554.6],['Second',594.5],['Third',639.5]].forEach(([n,t],k)=>{const cb=(nm,l)=>`<input type="radio" class="cb" name="${nm}"><i>${l}</i>`;
+ p1.insertAdjacentHTML('beforeend',`<div class="pt" style="top:${t}pt"><div class="l">${n}<br>Choice</div><div style="font-weight:bold;grid-column:2">Programme Name</div><div class="pn"><input name="prog${k}"></div><div style="font-weight:bold;font-size:8.5pt">Mode of Learning</div><div>${cb('mode'+k,'Face to Face')}</div><div>${cb('mode'+k,'Blended')}</div><div>${cb('mode'+k,'Online')}</div><div><b style="margin-right:4pt">Campus</b>${cb('camp'+k,'MH')}&nbsp;&nbsp;${cb('camp'+k,'LW')}&nbsp;&nbsp;${cb('camp'+k,'BT')}</div></div>`)});
+T(p,45,693,'D. REDIRECTION','ar b','font-size:10pt');
+T(p,45,713,'If you are not selected to any of your chosen programmes due to stiff competition and limited available','','font-size:11.2pt');
+T(p,47,731,'Space, you may be considered for selection to any programme which you did not choose but closer to','','font-size:11.2pt');
+T(p,47,751,'your choice.','','font-size:11.2pt');
+
+/* ---------- PAGE 2 ---------- */
+p='p2';
+T(p,43,51,'<b>E. PREVIOUS ACADEMIC RECORD</b> &nbsp; <i>( Fill in the gaps below with the relevant information )</i>','','font-size:9pt');
+T(p,39,73,'Have you ever been registered as a student of any public university in Malawi?','','font-size:9pt');UL(p,341,383,73,'e1');T(p,386,73,'If yes,','','font-size:9pt');
+LN(p,42,155,98,'When:','e2','b','font-size:9pt');LN(p,158,336,98,'Programme:','e3','b','font-size:9pt');LN(p,340,545,98,'Institution:','e4','b','font-size:9pt');
+LN(p,42,548,116,'Reason for leaving your previous institution','e5','b','font-size:9pt');
+T(p,43,144,'<b>F.ACADEMIC RECORD</b> &nbsp;&nbsp;&nbsp; <b><i>(MSCE/IGCSE OR OTHER EQUIVALENT INTERNATIONALLY RECOGNIZED</i></b>','','font-size:9pt');
+T(p,50,162,'<b><i>QUALIFICATIONS AT ‘O’ LEVEL)</i></b>','','font-size:9pt');
+[['MSCE:',52,90],['O-Level:',136,184],['A-Level:',223,267],['Other:',298,338]].forEach(([l,x,bx],i)=>{T(p,x,187,l,'','font-size:9pt');CB(p,bx,187,'f_q'+i,'checkbox','big')});
+T(p,375,187,'Specify','','font-size:9pt');UL(p,408,551,190,'f_other');
+['You must attach photocopies of your statement of results or certificates, officially stamped and signed','By the Head teacher of your last school where you wrote the examinations, or the District Education','Manager, or the District commissioner or any commissioner of Oaths. You cannot use two independent','Certificates for purposes of accumulating credits.'].forEach((t,i)=>T(p,i?53:56,213+i*18.5,t,'','font-size:9pt'));
+T(p,49,293,'<b>i. MSCE/O-Level or equivalent qualification (s)</b>','','font-size:9pt');
+
+function grid(p,top,colon,pre){
+ const rows=[['Year:',21],['Qualification:',23],['Certificate #:',23],['Centre/School Name'+(colon?':':''),51,'tp'],['Centre #:',22],['Candidate #:',22],['FT',25,'ft'],['Country:',22,'sm'],['Subject (Highest to Lowest)',21,'sm',1]];
+ for(let i=1;i<=10;i++)rows.push([i+'.',21,'sm']);
+ let h=`<div class="xt" style="top:${top}pt;grid-template-rows:22pt ${rows.map(r=>r[1]+'pt').join(' ')}">`;
+ ['1st','2nd','3rd'].forEach(a=>h+=`<div class="th">${a} Attempt Grades</div>`);
+ rows.forEach((r,ri)=>[0,1,2].forEach(k=>{const n=`${pre}${k}_${ri}`,st=r[2]=='tp'?'align-items:flex-start;padding-top:4pt':'';
+  h+=r[0]=='FT'?`<div class="ft"><span>From:</span><input class="s" name="${n}a"><span>To:</span><input class="s" name="${n}b"></div>`
+   :r[3]?`<div class="sm"><span>${r[0]}</span></div>`:`<div class="${r[2]||''}" style="${st}"><span>${r[0]}</span><input name="${n}"></div>`}));
+ $(p).insertAdjacentHTML('beforeend',h+'</div>')}
+grid('p2',306,1,'o');
+
+/* ---------- PAGE 3 ---------- */
+p='p3';
+T(p,37,48,'<b>ii. A-Level or equivalent qualification (s)</b>','','font-size:9pt');
+grid('p3',59,0,'a');
+T(p,38,529,'<b>G.FINANCIAL SUPPORT</b>','','font-size:9pt');
+T(p,50,547,'i) If selected, how will you pay for your university education?','','font-size:9pt');UL(p,50,553,572,'g1');
+T(p,50,587,'ii) Give the name of the sponsor/others/Etc., or put “self”','','font-size:9pt');UL(p,50,553,610,'g2');
+T(p,50,625,'<b>H.CANDIDATES WITH SPECIAL NEEDS</b>','','font-size:9pt');
+['The University encourages you to disclose any disability/medical condition which could disadvantage','your ability to study. All offers are made on academic grounds only, and the information you submit','will be used to help DMI-SJBU provide appropriate support. Please tick all that apply.'].forEach((t,i)=>T(p,52,641+i*17.5,t,'','font-size:9.2pt'));
+const hs=['No Disability','Learning Difficulty','Deaf/Serious Hearing impairment','Personal care support','Unseen Disability : Eg. Diabetes','Blind/serious visual impairment','Wheelchair user/Mobility issues','Mental Health condition','Other disability not listed here'];
+const hy=[692,714,735,753,772,695,715,732,751];
+hs.forEach((t,i)=>{const r=i>4;T(p,r?316:58,hy[i],`<b>${i+1}.</b>`,'','font-size:7.5pt');CB(p,r?331:70,hy[i],'h'+i,'checkbox','big');T(p,r?357:98,hy[i],t,'b','font-size:7.2pt')});
+
+/* ---------- PAGE 4 ---------- */
+p='p4';
+T(p,39,47,'Please detail other disability or additional support needs :','','font-size:9pt');UL(p,323,538,51,'h_d1');UL(p,40,543,66,'h_d2');UL(p,40,543,81,'h_d3');
+T(p,45,107,'<b>DECLARATION</b>','','font-size:11pt');
+T(p,52,133,'I','','font-size:9pt');UL(p,58,302,138,'d_name');T(p,316,133,'hereby certify that all the information given on','','font-size:9pt');
+T(p,54,157,'this form is true and further recognize that my application will not be processed if it is incomplete.','','font-size:9pt');
+T(p,43,190,'<b>Signature:</b>','','font-size:9pt');UL(p,84,280,195,'d_sig');T(p,302,190,'<b>Date:</b>','','font-size:9pt');UL(p,331,515,195,'d_date');
+T(p,41,228,'<b>CHECKLIST</b>','','font-size:11pt');
+T(p,63,249,'<b>I confirm that I have duly completed all the relevant sections of this application form attached</b>','','font-size:9pt');
+T(p,59,267,'<b>the following supporting documents:</b>','','font-size:9pt');
+p4.insertAdjacentHTML('beforeend',`<div class="ck" style="grid-template-rows:82pt 28pt 48pt;font-size:9.8pt"><div style="text-align:justify;line-height:24pt;display:block;padding-top:2pt">1.&nbsp; Copies of all relevant certificates and academic transcripts which are being used for the application. These must be duly certified by a Commissioner of Oaths as true copies of the original</div><div class="c"><input type="checkbox" class="cb big" name="ck0" style="position:static;transform:none"></div><div>2. Source of funding, i.e. official scholarship award/sponsorship letter.</div><div class="c"><input type="checkbox" class="cb big" name="ck1" style="position:static;transform:none"></div><div style="line-height:13pt">3. Proof of payment of an appropriate application fee bearing my name and<br>the amount of application fee paid.</div><div class="c"><input type="checkbox" class="cb big" name="ck2" style="position:static;transform:none"></div></div>`);
+
+/* ---------- behaviour ---------- */
+/* --- passport photo: resize client-side before storing, keep aspect ratio, JPEG 0.82 --- */
+$('photoIn').onchange=e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=600, scale=Math.min(1,MAX/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*scale); c.height=Math.round(img.height*scale);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      $('photo').innerHTML=`<img src="${c.toDataURL('image/jpeg',0.82)}" alt="Applicant photo">`;
+    };
+    img.src=r.result;
+  };
+  r.readAsDataURL(f);
+};
+
+const F=$('form'),els=()=>[...F.querySelectorAll('input:not([type=file])')];
+function save(){localStorage.setItem('dmi-form-v2',JSON.stringify(els().map(e=>e.type=='checkbox'||e.type=='radio'?e.checked:e.value)))}
+(function(){try{const d=JSON.parse(localStorage.getItem('dmi-form-v2')||'[]');els().forEach((e,i)=>{if(d[i]==null)return;e.type=='checkbox'||e.type=='radio'?e.checked=d[i]:e.value=d[i]})}catch(x){}})();
+F.addEventListener('input',save);F.addEventListener('change',save);
+function clearAll(){if(confirm('Clear everything you have entered?')){localStorage.removeItem('dmi-form-v2');location.reload()}}
+function fit(){document.querySelectorAll('.page').forEach(e=>e.style.zoom=Math.min(1,innerWidth/816))}fit();addEventListener('resize',fit);
+
+/* ---------- radio label resolver ----------
+   Each radio in this form has its human label as the immediately following
+   sibling element (<div class="a">…</div> outside the programme grid, or
+   <i>…</i> inside the programme grid). */
+function radioLabel(e){
+  const n=e.nextElementSibling;
+  if(n&&n.classList&&n.classList.contains('a')) return n.textContent.trim();
+  if(n&&n.tagName==='I') return n.textContent.trim();
+  return e.value||'on';
+}
+
+/* ---------- submit ---------- */
+async function submitApplication(){
+  const btn=$('submitBtn');
+  if(btn.disabled) return;
+  btn.disabled=true; const oldText=btn.textContent; btn.textContent='Submitting…';
+  try{
+    const fields={};
+    els().forEach(e=>{
+      if(!e.name) return;
+      if(e.type==='checkbox'){ if(e.checked) fields[e.name]=true; }
+      else if(e.type==='radio'){ if(e.checked) fields[e.name]=radioLabel(e); }
+      else fields[e.name]=e.value;
+    });
+
+    /* light client-side validation to give friendly errors */
+    let name='';
+    for(let i=0;i<26;i++) name += fields['n1_'+i]||'';
+    name=name.trim();
+    if(name.length<2){ alert('Please enter your name in section 2 (surname / first name / initial).'); return; }
+    if(!fields.level){ alert('Please tick either Diploma or Bachelor Degree at the top of page 1.'); return; }
+
+    const im=document.querySelector('#photo img');
+    const photo=im?im.src:null;
+
+    const res=await fetch('/api/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({fields,photo})
+    });
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error||('Submission failed ('+res.status+')'));
+
+    alert('Application received!\n\nYour application number is: '+data.appNo+'\n\nPlease keep it safe — you will need it for any correspondence.');
+  }catch(err){
+    alert(err.message||'Could not submit the application.');
+  }finally{
+    btn.disabled=false; btn.textContent=oldText;
+  }
+}
+</script></body></html>
